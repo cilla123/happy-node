@@ -1,0 +1,18 @@
+# 数据库
+db/
+
+# 测试代码
+test/
+
+# node_modules包
+node_modules/
+
+.DS_Store
+.vscode
+.cache
+package-lock.json
+yarn-error.log
+jsconfig.json
+npm-debug.log
+dist
+__dir__
