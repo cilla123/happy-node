@@ -1,6 +1,6 @@
 const Base = require('./Base')
 
-class Service extends BaseClass {
+class Service extends Base {
 
 }
 
