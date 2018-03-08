@@ -1,11 +1,31 @@
 const Koa = require('koa')
 const Emitter = require('events')
 const { resolve } = require('path')
+const debug = require('debug')
 const { defaultsDeep } = require('lodash')
+const ip = require('ip')
 
 const middlewares = require('./middlewares')
 const Loader = require('./libs/loader')
 const pkg = require('../package.json')
+const router = require('./middlewares/router')
+const router2 = require('./middlewares/router2')
+const router3 = require('./middlewares/router3')
+const package = require('../package.json')
+const {
+    BusinessError,
+    ParamsError,
+    Exception_404
+} = require('./base/Error')
+const Validator = require('./base/Validator')
+const Controller = require('./base/Controller')
+const Service = require('./base/Service')
+const libRouter = require('./libs/router')
+const viewEnv = require('./middlewares/nunjucks/env')
+const rewrite = require('./middlewares/rewrite')
+const code = require('./middlewares/code')
+const body = require('./middlewares/body')
+const koaStatic = require('./middlewares/static')
 
 class Happy extends Emitter {
 
@@ -111,25 +131,134 @@ class Happy extends Emitter {
         }
     }
 
-    /** 
-     * 使用中间件
-    */
-    useMiddlewares(){
-      R.map(R.compose(R.forEachObjIndexed(initWith => initWith(this.app)),
-          require,
-          name => resolve(__dirname, `./middlewares/${name}`)
-      ))(MIDDLEWARES)
+    // 自动加载业务中间件
+    // >= 0.0.17 自动加载
+    // 低版本 手动在 server/app.js 下配置
+    autoLoadMiddlewares() {
+        const middlewareDebug = debug('zan:middleware');
+        const middlewares = require(this.config.MIDDLEWARES_PATH);
+        if (Array.isArray(middlewares)) {
+            for (let i = 0; i < middlewares.length; i++) {
+                this.middlewares.push({
+                    name: middlewares[i].name || 'anonymous',
+                    fn: middlewares[i]
+                });
+            }
+        } else {
+            this.config.beforeLoadMiddlewares.call(this);
+        }
+
+        for (let i = 0; i < this.middlewares.length; i++) {
+            middlewareDebug('use %s', this.middlewares[i].name || '-');
+            this.app.use(this.middlewares[i].fn);
+        }
     }
 
-    run(){
-      this.app.listen(8080, () => {
-          console.log('启动成功')
-      })
+    autoLoadMiddlewares2() {
+        const middlewareDebug = debug('happy:middleware');
+
+        // 加载框架中间件
+        const frameworkMiddlewares = this.middlewareConfig.framework;
+        for (let i = 0; i < frameworkMiddlewares.length; i++) {
+            const middleware = this.allMiddlewares.find((item) => {
+                return item.name === frameworkMiddlewares[i]
+            });
+            if (middleware) {
+                middlewareDebug('use %s type %s', middleware.name || '-', middleware.type || '-');
+                this.app.use(middleware.fn);
+            }
+        }
+
+        // 加载项目中间件
+        const projectMiddlewares = this.middlewareConfig.project;
+        for (let i = 0; i < projectMiddlewares.length; i++) {
+            const middleware = this.allMiddlewares.find((item) => {
+                return item.name === projectMiddlewares[i];
+            });
+            if (middleware) {
+                middlewareDebug('use %s type %s', middleware.name || '-', middleware.type || '-');
+                this.app.use(middleware.fn);
+            }
+        }
+
+        const customMiddlewares = this.middlewareConfig.custom;
+        for (let i = 0; i < customMiddlewares.length; i++) {
+            let execute = [];
+            for (let j = 0; j < customMiddlewares[i].list.length; j++) {
+                const middleware = this.allMiddlewares.find((item) => {
+                    return item.name === customMiddlewares[i].list[j];
+                });
+                if (middleware) {
+                    execute.push(middleware.fn);
+                }
+            }
+            if (execute.length > 0) {
+                libRouter.use(customMiddlewares[i].match, execute);
+            }
+        }
     }
+
+    run() {
+        if (this.config.AUTO_MIDDLEWARE) {
+            this.autoLoadMiddlewares2();
+        } else {
+            this.autoLoadMiddlewares();
+        }
+
+        if (this.config.IRON_DIR) {
+            this.app.use(router3(this.config));
+        } else {
+            // 路由1：自定义路由方式1
+            router(this.app, this.config);
+            // 路由2：根据目录结构路由
+            this.app.use(router2(this.app));
+            this.app.use(libRouter.routes());
+            this.app.use(libRouter.allowedMethods());
+        }
+
+        let defaultErrorCallback = (err) => {
+            console.log('<defaultErrorCallback>');
+            console.log(err);
+        };
+
+        this.app.on('error', this.config.ERROR_CALLBACK || defaultErrorCallback);
+
+        this.app.listen(this.config.NODE_PORT, () => {
+            this.emit('start');
+            if (this.config.NODE_ENV === 'development') {
+                let msg = `服务启动成功!
+
+- Happy框架版本：         ${this.config.ZAN_VERSION}
+- NODE_ENV:             ${this.config.NODE_ENV}
+- NODE_PORT:            ${this.config.NODE_PORT}
+- Local:                http://127.0.0.1:${this.config.NODE_PORT}
+- On Your Network:      http://${ip.address()}:${this.config.NODE_PORT}`;
+                if (process.env.HTTP_PROXY && process.env.HTTPS_PROXY) {
+                    msg += `\n- HTTP_PROXY            ${process.env.HTTP_PROXY}`;
+                    msg += `\n- HTTPS_PROXY           ${process.env.HTTPS_PROXY}`;
+                }
+                console.log(boxen(msg, {
+                    padding: {
+                        left: 2,
+                        right: 2,
+                        top: 0,
+                        bottom: 1
+                    },
+                    margin: 1,
+                    borderColor: 'green',
+                    borderStyle: 'classic'
+                }));
+            } else {
+                console.log(`NODE_ENV = ${this.config.NODE_ENV}`);
+                console.log(`NODE_PORT = ${this.config.NODE_PORT}`);
+            }
+        });
+    }
+
 
 }
 
-// const happy = new Happy()
-// happy.run()
+const happy = new Happy()
+happy.run()
 
 module.exports = Happy
