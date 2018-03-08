@@ -135,7 +135,7 @@ class Happy extends Emitter {
     // >= 0.0.17 自动加载
     // 低版本 手动在 server/app.js 下配置
     autoLoadMiddlewares() {
-        const middlewareDebug = debug('zan:middleware');
+        const middlewareDebug = debug('happy:middleware');
         const middlewares = require(this.config.MIDDLEWARES_PATH);
         if (Array.isArray(middlewares)) {
             for (let i = 0; i < middlewares.length; i++) {
@@ -228,7 +228,7 @@ class Happy extends Emitter {
             if (this.config.NODE_ENV === 'development') {
                 let msg = `服务启动成功!
 
-- Happy框架版本：         ${this.config.ZAN_VERSION}
+- Happy框架版本：         ${this.config.HAPPY_VERSION}
 - NODE_ENV:             ${this.config.NODE_ENV}
 - NODE_PORT:            ${this.config.NODE_PORT}
 - Local:                http://127.0.0.1:${this.config.NODE_PORT}
