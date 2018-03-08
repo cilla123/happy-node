@@ -258,7 +258,4 @@ class Happy extends Emitter {
 
 }
 
-const happy = new Happy()
-happy.run()
-
 module.exports = Happy
