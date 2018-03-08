@@ -12,47 +12,8 @@ const healthCheck = require('./health_check');
 
 module.exports = function(config) {
     return [{
-        name: 'health',
-        fn: healthCheck,
-        type: 'framework'
-    }, {
-        name: 'mixin',
-        fn: mixin,
-        type: 'framework'
-    }, {
-        name: 'favicon',
-        fn: favicon(config.FAVICON_PATH),
-        type: 'framework'
-    }, {
         name: 'static',
         fn: zanStatic(config.STATIC_PATH),
-        type: 'framework'
-    }, {
-        name: 'helmet',
-        fn: koaHelmet({
-            dnsPrefetchControl: false,
-            noSniff: false,
-            ieNoOpen: false,
-            frameguard: false
-        }),
-        type: 'framework'
-    }, {
-        name: 'code',
-        fn: code(config.CODE_PATH),
-        type: 'framework'
-    }, {
-        name: 'nunjucks',
-        fn: nunjucks(config),
-        type: 'framework'
-    },{
-        name: 'body',
-        fn: body(),
-        type: 'framework'
-    }, {
-        name: 'xss',
-        fn: xss({
-            WHITELISTS: config.XSS_WHITELISTS
-        }),
         type: 'framework'
     }];
 };
