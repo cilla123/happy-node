@@ -274,11 +274,13 @@ class Happy extends Emitter {
 // module.exports.viewEnv = viewEnv
 // module.exports.rewrite = rewrite
 
+Validator = new Validator()
+
 module.exports = {
     Happy, 
     BusinessError,
     Exception_404,
-    Validator: new Validator(),
+    Validator,
     router,
     Controller,
     Service,
