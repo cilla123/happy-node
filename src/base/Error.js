@@ -17,7 +17,7 @@ class ParamsError extends Error {
 /** 
  * 业务错误类
  */
-class BussinessError extends Error {
+class BusinessError extends Error {
 
     constructor(type, code, msg){
         super(type)

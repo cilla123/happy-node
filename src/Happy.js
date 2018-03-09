@@ -14,7 +14,7 @@ const router2 = require('./middlewares/router2')
 const router3 = require('./middlewares/router3')
 const package = require('../package.json')
 const {
-    BussinessError,
+    BusinessError,
     ParamsError,
     Exception_404
 } = require('./base/Error')
