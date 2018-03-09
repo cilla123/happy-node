@@ -43,6 +43,6 @@ class Exception_404 extends Error {
 
 module.exports = {
     ParamsError,
-    BussinessError,
+    BusinessError,
     Exception_404
 }
