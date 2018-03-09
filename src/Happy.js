@@ -4,6 +4,7 @@ const { resolve } = require('path')
 const debug = require('debug')
 const { defaultsDeep } = require('lodash')
 const ip = require('ip')
+const boxen = require('boxen')
 
 const middlewares = require('./middlewares')
 const Loader = require('./libs/loader')
