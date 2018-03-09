@@ -126,7 +126,15 @@ class Happy extends Emitter {
     get defaultMiddlewareConfig(){
         return {
             framework: [
+                'health',
+                'mixin',
+                'favicon',
                 'static',
+                'helmet',
+                'code',
+                'nunjucks',
+                'body',
+                'xss'
             ],
             project: [],
             custom: []
