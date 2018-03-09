@@ -278,7 +278,7 @@ module.exports = {
     Happy, 
     BusinessError,
     Exception_404,
-    Validator = new Validator(),
+    Validator: new Validator(),
     router,
     Controller,
     Service,
