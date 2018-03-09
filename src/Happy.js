@@ -28,6 +28,8 @@ const code = require('./middlewares/code')
 const body = require('./middlewares/body')
 const koaStatic = require('./middlewares/static')
 
+const validator = new Validator()
+
 class Happy extends Emitter {
 
     constructor(config){
@@ -274,13 +276,13 @@ class Happy extends Emitter {
 // module.exports.viewEnv = viewEnv
 // module.exports.rewrite = rewrite
 
-Validator = new Validator()
 
 module.exports = {
     Happy, 
     BusinessError,
     Exception_404,
     Validator,
+    validator:
     router,
     Controller,
     Service,
