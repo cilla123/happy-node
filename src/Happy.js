@@ -14,7 +14,7 @@ const router2 = require('./middlewares/router2')
 const router3 = require('./middlewares/router3')
 const package = require('../package.json')
 const {
-    BusinessError,
+    BussinessError,
     ParamsError,
     Exception_404
 } = require('./base/Error')
@@ -261,15 +261,27 @@ class Happy extends Emitter {
 // const happy = new Happy()
 // happy.run()
 
-module.exports = Happy
+// module.exports = Happy
 
-module.exports.BusinessError = BusinessError
-module.exports.ParamsError = ParamsError
-module.exports.Exception_404 = Exception_404
-module.exports.Validator = Validator
-module.exports.validator = new Validator()
-module.exports.router = libRouter
-module.exports.Controller = Controller
-module.exports.Service = Service
-module.exports.viewEnv = viewEnv
-module.exports.rewrite = rewrite
+// module.exports.BusinessError = BusinessError
+// module.exports.ParamsError = ParamsError
+// module.exports.Exception_404 = Exception_404
+// module.exports.Validator = Validator
+// module.exports.validator = new Validator()
+// module.exports.router = libRouter
+// module.exports.Controller = Controller
+// module.exports.Service = Service
+// module.exports.viewEnv = viewEnv
+// module.exports.rewrite = rewrite
+
+module.exports = {
+    Happy, 
+    BusinessError,
+    Exception_404,
+    Validator = new Validator(),
+    router,
+    Controller,
+    Service,
+    viewEnv,
+    rewrite
+}
