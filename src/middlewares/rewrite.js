@@ -1,4 +1,4 @@
-const debug = require('debug')('zan:rewrite');
+const debug = require('debug')('happy:rewrite');
 const toRegexp = require('path-to-regexp');
 
 function toMap(params) {

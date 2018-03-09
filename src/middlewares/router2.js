@@ -1,4 +1,4 @@
-const debug = require('debug')('zan:router2');
+const debug = require('debug')('happy:router2');
 const isFunction = require('lodash/isFunction');
 const { parseRequest } = require('../libs/util');
 

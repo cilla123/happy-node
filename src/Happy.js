@@ -43,7 +43,6 @@ class Happy extends Emitter {
         process.env.NODE_ENV = this.config.NODE_ENV
         process.env.NODE_PORT = this.config.NODE_PORT
 
-        this.app = new Koa()
         this.app.config = this.config
         this.app.keys = this.config.KEYS
         this.app.env = this.config.NODE_ENV
@@ -257,6 +256,9 @@ class Happy extends Emitter {
 
 
 }
+
+// const happy = new Happy()
+// happy.run()
 
 module.exports = Happy
 

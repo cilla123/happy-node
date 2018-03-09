@@ -1,6 +1,6 @@
 const fs = require('fs');
 const glob = require('glob');
-const debug = require('debug')('zan:router');
+const debug = require('debug')('happy:router');
 const isFunction = require('lodash/isFunction');
 const router = require('../libs/router');
 
