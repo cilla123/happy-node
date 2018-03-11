@@ -7,7 +7,7 @@ const responseLogPath = 'logs/response/server'
 
 log4js.configure({
   appenders: {
-    "ruleConsole": {
+    "rule-console": {
       "type": "console"
     },
     "errorLogger": {
