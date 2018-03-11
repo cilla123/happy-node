@@ -2,8 +2,8 @@ const favicon = require('./favicon');
 const happyStatic = require('./static');
 const koaHelmet = require('koa-helmet');
 const code = require('./code');
-// const seo = require('./seo');
-// const log = require('./log');
+const seo = require('./seo');
+const log = require('./log');
 const body = require('./body');
 const xss = require('./xss');
 const mixin = require('./mixin');
@@ -41,8 +41,18 @@ module.exports = function(config) {
         fn: code(config.CODE_PATH),
         type: 'framework'
     }, {
+        name: 'seo',
+        fn: seo({
+            path: config.SEO_PATH
+        }),
+        type: 'framework'
+    }, {
         name: 'nunjucks',
         fn: nunjucks(config),
+        type: 'framework'
+    }, {
+        name: 'log',
+        fn: log(),
         type: 'framework'
     }, {
         name: 'body',

@@ -1,4 +1,4 @@
-const UA = require('zan-ua');
+const UA = require('happy-cua');
 const toRegexp = require('path-to-regexp');
 
 module.exports = function(options) {

@@ -69,7 +69,7 @@ module.exports = function(config) {
             const state = ctx.getState();
             const globalState = defaultsDeep({
                 env: config.NODE_ENV,
-                version: config.ZAN_VERSION
+                version: config.HAPPY_VERSION
             }, context._global, ctx.getGlobal());
             const wrapContext = defaultsDeep({}, context, state);
             delete wrapContext.global;
@@ -89,7 +89,7 @@ module.exports = function(config) {
             const state = ctx.getState();
             const globalState = defaultsDeep({
                 env: config.NODE_ENV,
-                version: config.ZAN_VERSION
+                version: config.HAPPY_VERSION
             }, context._global, ctx.getGlobal());
             const wrapContext = defaultsDeep({}, context, state);
             delete wrapContext.global;
@@ -114,7 +114,7 @@ module.exports = function(config) {
             const state = ctx.getState();
             const globalState = defaultsDeep({
                 env: config.NODE_ENV,
-                version: config.ZAN_VERSION
+                version: config.HAPPY_VERSION
             }, context._global, ctx.getGlobal());
             const wrapContext = defaultsDeep({}, context, state);
             delete wrapContext.global;

@@ -6,7 +6,7 @@ const isPlainObject = require('lodash/isPlainObject');
 const isFunction = require('lodash/isFunction');
 const { parseRequest } = require('../libs/util');
 
-const routerDebug = debug('zan:router');
+const routerDebug = debug('happy:router');
 
 function getAllControllers(basePath) {
     let controllers = {};

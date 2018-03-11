@@ -132,7 +132,9 @@ class Happy extends Emitter {
                 'static',
                 'helmet',
                 'code',
+                'seo',
                 'nunjucks',
+                'log',
                 'body',
                 'xss'
             ],
