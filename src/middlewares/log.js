@@ -9,7 +9,7 @@ log4js.configure({
     replaceConsole: true
 });
 
-module.exports = function(options = {}) {
+module.exports = function (options = {}) {
     const logger = log4js.koaLogger(log4js.getLogger('http'), {
         level: options.level || 'auto',
         format: options.format || DEFAULT_FORMAT

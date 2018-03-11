@@ -51,10 +51,6 @@ module.exports = function(config) {
         fn: nunjucks(config),
         type: 'framework'
     }, {
-        name: 'log',
-        fn: log(),
-        type: 'framework'
-    }, {
         name: 'body',
         fn: body(),
         type: 'framework'
