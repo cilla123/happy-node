@@ -10,7 +10,7 @@ const mixin = require('./mixin');
 const nunjucks = require('./nunjucks');
 const healthCheck = require('./health_check');
 
-module.exports = function(config) {
+module.exports = function (config) {
     return [{
         name: 'health',
         fn: healthCheck,
@@ -49,6 +49,10 @@ module.exports = function(config) {
     }, {
         name: 'nunjucks',
         fn: nunjucks(config),
+        type: 'framework'
+    }, {
+        name: 'log',
+        fn: log(),
         type: 'framework'
     }, {
         name: 'body',

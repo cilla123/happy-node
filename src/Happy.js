@@ -134,6 +134,7 @@ class Happy extends Emitter {
                 'code',
                 'seo',
                 'nunjucks',
+                'log',
                 'body',
                 'xss'
             ],

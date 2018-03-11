@@ -1,6 +1,6 @@
 {
   "name": "happy-node",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "HappyNode 是一款轻量级的、面向前后端分离的，基于 Koa2 二次封装的高性能的 Web 开发框架",
   "main": "index.js",
   "scripts": {
@@ -26,7 +26,7 @@
     "koa": "^2.5.0",
     "koa-body": "^2.5.0",
     "koa-helmet": "^3.3.0",
-    "koa-log4": "^2.1.0",
+    "koa-log4": "^2.3.0",
     "koa-router": "^7.4.0",
     "koa-static": "^4.0.2",
     "koa-views": "^6.1.4",
